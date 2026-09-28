@@ -1,0 +1,161 @@
+<Window x:Class="WordImageExtractor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Word Image Extractor"
+        Width="900" Height="820" MinWidth="760" MinHeight="700"
+        WindowStartupLocation="CenterScreen"
+        Background="#F4F4F5"
+        AllowDrop="True"
+        Drop="Window_Drop"
+        DragOver="Window_DragOver">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="28">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="Word Image Extractor" FontSize="28" FontWeight="SemiBold" Foreground="#18181B"/>
+                    <TextBlock x:Name="SubtitleText" Text="Extract original-quality images from Word documents" Margin="0,5,0,0" Foreground="#52525B" FontSize="15"/>
+                </StackPanel>
+                <ComboBox x:Name="LanguageCombo" Grid.Column="1" Width="92" Height="38" SelectionChanged="LanguageCombo_SelectionChanged" SelectedIndex="0">
+                    <ComboBoxItem Content="EN" Tag="en"/>
+                    <ComboBoxItem Content="VI" Tag="vi"/>
+                </ComboBox>
+            </Grid>
+
+            <Border Grid.Row="2" Background="White" BorderBrush="#D4D4D8" BorderThickness="1" CornerRadius="10" Padding="22">
+                <StackPanel>
+                    <TextBlock x:Name="DocumentTitleText" Text="Document" FontWeight="SemiBold" FontSize="17"/>
+                    <Border x:Name="DropZone" Margin="0,14,0,0" BorderBrush="#A1A1AA" BorderThickness="1" CornerRadius="8" Padding="24" Background="#FAFAFA">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock x:Name="DropText" Text="Drop a Word document here" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="OrText" Text="or" Margin="0,4,0,10" Foreground="#71717A" HorizontalAlignment="Center"/>
+                            <Button x:Name="AddFileButton" Content="Add file" Width="120" Click="AddFileButton_Click"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Grid Margin="0,16,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="FileLabelText" Text="File" Foreground="#71717A"/>
+                        <TextBlock x:Name="FileValueText" Grid.Column="1" Text="No file selected" TextTrimming="CharacterEllipsis" FontWeight="Medium"/>
+                        <TextBlock x:Name="InfoLabelText" Grid.Row="1" Text="Info" Foreground="#71717A" Margin="0,8,0,0"/>
+                        <TextBlock x:Name="InfoValueText" Grid.Row="1" Grid.Column="1" Text="-" Margin="0,8,0,0" TextWrapping="Wrap"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="4" Background="White" BorderBrush="#D4D4D8" BorderThickness="1" CornerRadius="10" Padding="22">
+                <StackPanel>
+                    <TextBlock x:Name="OutputTitleText" Text="Output" FontWeight="SemiBold" FontSize="17"/>
+                    <Grid Margin="0,14,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="210"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="12"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="12"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="12"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock x:Name="FormatLabelText" Text="Output format" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="FormatCombo" Grid.Column="1" SelectionChanged="FormatCombo_SelectionChanged" SelectedIndex="0">
+                            <ComboBoxItem Content="Original - Best Quality" Tag="Original"/>
+                            <ComboBoxItem Content="PNG - Lossless" Tag="Png"/>
+                            <ComboBoxItem Content="JPEG" Tag="Jpeg"/>
+                            <ComboBoxItem Content="TIFF" Tag="Tiff"/>
+                            <ComboBoxItem Content="BMP" Tag="Bmp"/>
+                        </ComboBox>
+
+                        <TextBlock x:Name="OrganizationLabelText" Grid.Row="2" Text="Organization" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="OrganizationCombo" Grid.Row="2" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Group by page" Tag="GroupByPage"/>
+                            <ComboBoxItem Content="Flat sequential list" Tag="Flat"/>
+                        </ComboBox>
+
+                        <TextBlock x:Name="PaginationLabelText" Grid.Row="4" Text="Page detection" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="PaginationCombo" Grid.Row="4" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Accurate - Microsoft Word" Tag="AccurateWord"/>
+                            <ComboBoxItem Content="Portable - document order" Tag="Portable"/>
+                        </ComboBox>
+
+                        <TextBlock x:Name="QualityLabelText" Grid.Row="6" Text="JPEG quality" VerticalAlignment="Center"/>
+                        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
+                            <Slider x:Name="QualitySlider" Minimum="70" Maximum="100" Value="95" TickFrequency="1" Width="280" IsSnapToTickEnabled="True" ValueChanged="QualitySlider_ValueChanged" IsEnabled="False"/>
+                            <TextBlock x:Name="QualityValueText" Text="95" Margin="12,0,0,0" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="6" Background="White" BorderBrush="#D4D4D8" BorderThickness="1" CornerRadius="10" Padding="22">
+                <StackPanel>
+                    <TextBlock x:Name="OptionsTitleText" Text="Options" FontWeight="SemiBold" FontSize="17"/>
+                    <CheckBox x:Name="MetadataCheck" Content="Include image metadata" IsChecked="True" Margin="0,14,0,0"/>
+                    <CheckBox x:Name="CsvCheck" Content="Create manifest CSV" IsChecked="True" Margin="0,10,0,0"/>
+                    <CheckBox x:Name="JsonCheck" Content="Create manifest JSON" IsChecked="True" Margin="0,10,0,0"/>
+                    <CheckBox x:Name="HeaderFooterCheck" Content="Include header/footer image assets once" IsChecked="False" Margin="0,10,0,0" Checked="HeaderFooterCheck_Changed" Unchecked="HeaderFooterCheck_Changed"/>
+                    <TextBlock x:Name="HeaderFooterHintText" Text="Header/footer assets are exported once because Word may repeat the same asset across many pages." Foreground="#71717A" FontSize="12.5" Margin="24,5,0,0" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="8" Background="White" BorderBrush="#D4D4D8" BorderThickness="1" CornerRadius="10" Padding="22">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="StatusTitleText" Text="Status" FontWeight="SemiBold" FontSize="17"/>
+                        <TextBlock x:Name="WordStatusText" Grid.Column="1" Text="Word: checking..." Foreground="#52525B"/>
+                    </Grid>
+                    <TextBlock x:Name="StatusText" Text="Ready." Margin="0,12,0,0" TextWrapping="Wrap"/>
+                    <ProgressBar x:Name="ProgressBar" Height="12" Minimum="0" Maximum="100" Value="0" Margin="0,12,0,0"/>
+                    <TextBlock x:Name="ProgressText" Text="" Foreground="#71717A" Margin="0,7,0,0"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,18,0,0">
+                        <Button x:Name="ExtractButton" Content="Extract images" MinWidth="145" Click="ExtractButton_Click" IsEnabled="False"/>
+                        <Button x:Name="CancelButton" Content="Cancel" MinWidth="100" Click="CancelButton_Click" IsEnabled="False"/>
+                        <Button x:Name="OpenFolderButton" Content="Open folder" MinWidth="120" Click="OpenFolderButton_Click" IsEnabled="False"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Grid.Row="10" HorizontalAlignment="Stretch">
+                <TextBlock x:Name="SafetyText" Text="Original mode preserves embedded bytes. Failed conversions fall back to the original file instead of dropping the image." TextAlignment="Center" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="#71717A" FontSize="12.5"/>
+                <TextBlock Margin="0,8,0,0" FontSize="12.5" TextAlignment="Center" HorizontalAlignment="Stretch">
+                    <Hyperlink NavigateUri="https://www.facebook.com/ngkph.m" RequestNavigate="Copyright_RequestNavigate">
+                        Copyright © 2026 Nguyen Khang. All Rights Reserved.
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Window>

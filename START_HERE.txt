@@ -1,0 +1,16 @@
+WORD IMAGE EXTRACTOR V1.0.1
+===========================
+
+1. Install .NET 8 SDK if you want to build from source.
+2. Run BUILD_AND_RUN.bat.
+3. Add or drag a .docx, .docm, or .doc file into the application.
+4. Keep "Original - Best Quality" for byte-for-byte embedded image extraction.
+5. Use "Accurate - Microsoft Word" when Microsoft Word is installed and exact page grouping is important.
+6. Click Extract images and choose the ZIP destination.
+
+For a portable self-contained Windows x64 build, run PUBLISH_PORTABLE.bat.
+
+Notes:
+- Legacy .doc requires Microsoft Word.
+- Accurate page mapping requires Microsoft Word.
+- Portable mode preserves document order but does not invent page numbers.

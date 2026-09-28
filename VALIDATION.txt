@@ -1,0 +1,23 @@
+Word Image Extractor V1.0.1 - validation notes
+
+FIXED FROM USER BUILD LOG
+- CS0103 File not found in current context
+- CS0103 Path not found in current context
+- CS0103 Directory not found in current context
+- CS0246 FileStream / MemoryStream / StreamWriter not found
+- CS0103 FileMode / FileAccess / FileShare / FileOptions not found
+- Cascade type errors caused by unresolved Path/File symbols
+- CS8604 nullable argument warning in CanExtractSelectedFile
+
+CAUSE
+The V1.0.0 source relied on implicit framework usings for System.IO. In the user's WPF build environment those IO types were not imported, creating 61 compile errors and several cascading type errors. V1.0.1 imports System.IO explicitly in every affected source file.
+
+STATIC VALIDATION PERFORMED HERE
+- Project XML parsed successfully
+- XAML XML parsed successfully
+- All XAML event-handler names resolve to methods in MainWindow.xaml.cs
+- All reported System.IO symbols now have explicit imports in their compilation units
+- ZIP package integrity checked
+
+LIMITATION OF THIS ENVIRONMENT
+The current build environment does not contain the Windows .NET SDK, WPF runtime, or Microsoft Word, so native Windows compilation and COM pagination cannot be executed here. Run BUILD_AND_RUN.bat on Windows for the final native compile/runtime test.
