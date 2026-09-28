@@ -6,11 +6,11 @@
 
 [English](#english) · [Tiếng Việt](#tiếng-việt)
 
-![Version](https://img.shields.io/badge/version-1.0.2-111827?style=flat-square)
-![Platform](https://img.shields.io/badge/platform-Windows-111827?style=flat-square)
-![Framework](https://img.shields.io/badge/.NET-8-111827?style=flat-square)
-![UI](https://img.shields.io/badge/UI-WPF-111827?style=flat-square)
-![Language](https://img.shields.io/badge/UI-English%20%2F%20Vietnamese-111827?style=flat-square)
+![Version](https://img.shields.io/badge/version-1.0.2-22c55e?style=flat-square)
+![Platform](https://img.shields.io/badge/platform-Windows-0ea5e9?style=flat-square&logo=windows&logoColor=white)
+![Framework](https://img.shields.io/badge/.NET-8-8b5cf6?style=flat-square&logo=dotnet&logoColor=white)
+![UI](https://img.shields.io/badge/UI-WPF-f59e0b?style=flat-square)
+![Language](https://img.shields.io/badge/UI-English%20%2F%20Vietnamese-14b8a6?style=flat-square)
 
 </div>
 
